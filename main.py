@@ -27,7 +27,7 @@ class Offensif(Vaisseaux):
         self.boucliers = boucliers
 
 
-
+"""  PART 2 
 flotte = []
 
 # Ajouter 50 vaisseaux à la flotte
@@ -51,3 +51,51 @@ for i in range(50):
     # Ajouter le vaisseau à la flotte
     flotte.append(vaisseaux)
 
+"""
+# PART 3
+# Classe pour représenter la flotte
+class Flotte:
+    def __init__(self, size):
+        self.navires = []
+        for i in range(size):
+            type = random.choice(['soutien', 'offensif'])
+            coordinates = (random.randint(0, 100), random.randint(0, 100))
+            self.navires.append(Vaisseaux(type, coordinates))
+
+    def paire_navires(self):
+
+         # Crée une liste de paires de navires
+        paires =[]
+
+        # Parcourt tous les navires de la flotte
+        for i in range (len(self.navires)):
+             
+             # Parcourt tous les navires de la flotte à partir de l'indice i + 1 ( indices paire : 2)
+             for j in range(i + 1, len(self.navires)):
+
+                # Si deux navires sont dans des positions adjacentes et ont le même type on ajoute ces deux navires en tant que couple
+                if self.navires[i].type != self.navires[j].type:
+                    paires.append((self.navires[i], self.navires[j]))
+
+    # Retourne la liste des paires de navires
+        return paires
+
+    def move_paires(self, paires):
+        # Déplace les paires de navires vers des positions adjacentes
+        for paire in paires:
+
+            # Déplace le navire offensif
+            paire[0].coordinates = (paire[0].coordinates[0] +  paire[0].coordinates[1])
+
+            # Déplace le navire de soutien
+            paire[1].coordinates = (paire[1].coordinates[0] -  paire[1].coordinates[1])
+
+
+# Crée une flotte
+flotte = Flotte(50)
+
+# Génère les paires de navires
+paires = flotte.paire_navires()
+
+# Déplace les paires de navires
+flotte.move_paires(paires)
